@@ -14,7 +14,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Icon(Icons.flaky_sharp),
         actions: [
           IconButton(
             onPressed: () {
@@ -30,54 +30,90 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 0.0, left: 60.0, right: 60.0),
-            child: Image.asset('assets/google.jpg'),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: GradientElevatedButtons( // Corrected from GradientElevatedButtons to GradientElevatedButton
-              backgroundGradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [const Color.fromARGB(255, 205, 225, 235), const Color.fromARGB(255, 231, 206, 206)],
-              ),
-              strokeGradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [const Color.fromARGB(255, 238, 209, 209), const Color.fromARGB(255, 243, 205, 205)],
-              ),
-              onPressed: () {
-                // Action to navigate to LectureSearchPage
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LectureSearchPage()),
-                );
-              },
-              borderWidth: 2.0,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: SizedBox(
-                  width: 250,
-                  child: Row( // Center the icon and text
-                    children: [
-                      Icon(Icons.search),
-                      const SizedBox(width: 8), // Add space between the icon and text
-                      const Text('Search'),
-                      const SizedBox(width: 120),
-                      Icon(Icons.search),
-                      Icon(Icons.search),
-                    ],
+      body: SafeArea( // Keep the SafeArea
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 0.0, left: 60.0, right: 60.0),
+              child: Image.asset('assets/google.jpg'),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: GradientElevatedButtons( // Corrected from GradientElevatedButtons to GradientElevatedButton
+                backgroundGradient: LinearGradient(
+                  colors: [
+                    const Color.fromARGB(255, 205, 225, 235),
+                    const Color.fromARGB(255, 231, 206, 206)
+                  ],
+                ),
+                strokeGradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    const Color.fromARGB(255, 238, 209, 209),
+                    const Color.fromARGB(255, 243, 205, 205)
+                  ],
+                ),
+                onPressed: () {
+                  // Action to navigate to LectureSearchPage
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LectureSearchPage()),
+                  );
+                },
+                borderWidth: 2.0,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: SizedBox(
+                    width: 250,
+                    child: Row( // Center the icon and text
+                      children: [
+                        Icon(Icons.search),
+                        const SizedBox(width: 8), // Add space between the icon and text
+                        const Text('Search'),
+                      ],
+                    ),
                   ),
                 ),
+                borderRadius: 60.0,
+                elevation: 8.0,
               ),
-              borderRadius: 60.0,
-              elevation: 8.0,
             ),
-          ),
-        ],
+            // New buttons below the elevated button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // Action for first button
+                  },
+                  child: Icon(Icons.search),
+                ),
+                const SizedBox(width: 10), // Space between buttons
+                ElevatedButton(
+                  onPressed: () {
+                    // Action for second button
+                  },
+                  child: Icon(Icons.person),
+                ),
+                const SizedBox(width: 10), // Space between buttons
+                ElevatedButton(
+                  onPressed: () {
+                    // Action for second button
+                  },
+                  child: Icon(Icons.network_cell),
+                ),
+                const SizedBox(width: 10), // Space between buttons
+                ElevatedButton(
+                  onPressed: () {
+                    // Action for second button
+                  },
+                  child: Icon(Icons.bluetooth_outlined),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
