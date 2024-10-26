@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'searchmodel.dart'; // Ensure your model classes are imported
-
+import '../../globalvar.dart' as globals;
 
 
 class LectureSearchPage extends StatefulWidget {
@@ -27,7 +27,7 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
   Future<SearchResponse?> fetchLectures({int startIndex = 1}) async {
   const apiKey = 'AIzaSyDgyjGH9bB1EV0vLRVUgZchTaDemRLFmGw'; // Replace with your actual API key
   const cx = 'c3098012a10bf496a'; // Replace with your actual CX
-  const query = 'ship'; // Use the query you want
+  final query = globals.searchq; // Use the query you want
   const numResults = 10; // Number of results per page
 
   final url = Uri.parse(

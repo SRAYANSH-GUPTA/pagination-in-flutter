@@ -4,6 +4,7 @@ import 'features/search/searchviewandviewmodel.dart';
 import 'features/saved/savedview.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'features/searchfield/searchview.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,7 +35,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     const Home(),
-    const LectureSearchPage(),
+    SearchPage(),
     const saved(),
   ];
 
