@@ -1,47 +1,55 @@
 import 'package:flutter/material.dart';
-import 'features/home/homeview.dart';
-import 'features/search/searchviewandviewmodel.dart';
-import 'features/saved/savedview.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(MaterialApp(
+    builder: (context, child) {
+      return Directionality(textDirection: TextDirection.ltr, child: child!);
+    },
+    title: 'GNav',
+    theme: ThemeData(
+      primaryColor: Colors.grey[800],
+    ),
+    home: Example()));
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MainPage(), // Add const if MainPage has no mutable properties.
-     // Optional: to remove the debug banner.
-    );
-  }
-}
-
-
-class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+class Example extends StatefulWidget {
+  const Example({super.key});
 
   @override
-  _MainPageState createState() => _MainPageState();
+  _ExampleState createState() => _ExampleState();
 }
 
-class _MainPageState extends State<MainPage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _pages = [
-    const Home(),
-    const LectureSearchPage(),
-    const saved(),
+class _ExampleState extends State<Example> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Search',
+      style: optionStyle,
+    ),
+    Text(
+      'Saved',
+      style: optionStyle,
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex],
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 20,
+        title: const Text('GoogleNavBar'),
+        backgroundColor: Colors.white,
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.white,
@@ -78,11 +86,12 @@ class _MainPageState extends State<MainPage> {
                   icon: LineIcons.bookmark,
                   text: 'Saved',
                 ),
+                
               ],
-              selectedIndex: _currentIndex,
+              selectedIndex: _selectedIndex,
               onTabChange: (index) {
                 setState(() {
-                  _currentIndex = index;
+                  _selectedIndex = index;
                 });
               },
             ),
