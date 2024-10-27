@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gradients_elevation_buttons/gradients_elevation_buttons.dart';
-import 'package:pagination/features/search/searchviewandviewmodel.dart';
+import '../searchfield/searchview.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
                   // Action to navigate to LectureSearchPage
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const LectureSearchPage()),
+                    MaterialPageRoute(builder: (context) => SearchPage()),
                   );
                 },
                 borderWidth: 2.0,
