@@ -85,7 +85,6 @@ class _HomeState extends State<Home> {
                   child: SizedBox(
                     width: 250,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         Icon(Icons.search),
                         SizedBox(width: 8),

@@ -5,6 +5,8 @@ import 'searchmodel.dart'; // Ensure your model classes are imported
 import '../../globalvar.dart' as globals;
 import 'package:gradients_elevation_buttons/gradients_elevation_buttons.dart';
 import '../searchfield/searchview.dart';
+import '../blankpage/blankpage.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LectureSearchPage extends StatefulWidget {
   const LectureSearchPage({super.key});
@@ -14,11 +16,11 @@ class LectureSearchPage extends StatefulWidget {
 }
 
 class _LectureSearchPageState extends State<LectureSearchPage> {
-  int _currentPage = 1; // Track the current page
-  final List<Item> _items = []; // List to store fetched items
-  bool _isLoadingMore = false; // To track loading state for pagination
-  bool _hasMoreResults = true; // Flag to track if more results are available
-  bool _isLoadingInitial = true; // Flag for initial loading state
+  int _currentPage = 1; 
+  final List<Item> _items = []; 
+  bool _isLoadingMore = false; 
+  bool _hasMoreResults = true; 
+  bool _isLoadingInitial = true; 
 
   @override
   void initState() {
@@ -27,10 +29,10 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
   }
 
   Future<SearchResponse?> fetchLectures({int startIndex = 1}) async {
-    const apiKey = 'AIzaSyBe9pJhyLoYxzg3Fg7sqGhNftuYgGh3k5k'; // Replace with your actual API key
-    const cx = '97687509e9d3147fb'; // Replace with your actual CX
-    final query = globals.searchq; // Use the query you want
-    const numResults = 10; // Number of results per page
+    final apiKey = dotenv.env['apiKey']; 
+    final cx = dotenv.env['cx']; 
+    final query = globals.searchq; 
+    const numResults = 10; 
 
     final url = Uri.parse(
       'https://www.googleapis.com/customsearch/v1?key=$apiKey&cx=$cx&q=$query&num=$numResults&start=$startIndex',
@@ -44,41 +46,41 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
         print('API Response: $data');
 
         final searchResponse = SearchResponse.fromJson(data);
-        return searchResponse; // Return the parsed SearchResponse
+        return searchResponse; 
       } else {
         print('Request failed with status: ${response.statusCode}');
         print('Response body: ${response.body}');
-        return null; // Return null in case of error
+        return null; 
       }
     } catch (e) {
       print('An error occurred: $e');
-      return null; // Return null in case of exception
+      return null; 
     }
   }
 
   Future<void> _fetchLectures() async {
-    if (!_hasMoreResults || _isLoadingMore) return; // Don't fetch if no more results available or already loading
+    if (!_hasMoreResults || _isLoadingMore) return; 
 
     setState(() {
-      _isLoadingMore = true; // Set loading state
+      _isLoadingMore = true; 
     });
 
     final searchResponse = await fetchLectures(startIndex: (_currentPage - 1) * 10 + 1);
     if (searchResponse != null) {
       setState(() {
-        _items.addAll(searchResponse.items); // Add fetched items to the list
-        // Check if there are fewer results than expected
+        _items.addAll(searchResponse.items); 
+      
         if (searchResponse.items.length < 10) {
-          _hasMoreResults = false; // No more results to fetch
+          _hasMoreResults = false; 
         }
-        _isLoadingInitial = false; // Set initial loading to false
+        _isLoadingInitial = false; 
       });
     } else {
-      _hasMoreResults = false; // Handle null response gracefully
+      _hasMoreResults = false;
     }
 
     setState(() {
-      _isLoadingMore = false; // Reset loading state
+      _isLoadingMore = false; 
     });
   }
 
@@ -92,7 +94,7 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop(); 
               },
               child: const Text('Close'),
             ),
@@ -114,7 +116,7 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: ElevatedButton(
         onPressed: () {
-          // Define what happens when the button is pressed
+          
           print('Selected Category: $label');
         },
         child: Text(label),
@@ -128,7 +130,14 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {},
-          icon: Image.asset("assets/lab.jpg"),
+          icon: InkWell(onTap: ()
+          {
+           Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const BlankPage(pageName: 'Search Labs')),
+                    );
+          },
+            child: Image.asset("assets/lab.jpg")),
         ),
         title: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -145,7 +154,13 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.person),
+            icon: InkWell(onTap: () => {
+              Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const BlankPage(pageName: 'Profile')),
+                    )
+            },
+              child: Icon(Icons.person)),
           ),
         ],
       ),
@@ -219,12 +234,12 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
           ),
           Expanded(
             child: _isLoadingInitial
-                ? const Center(child: CircularProgressIndicator()) // Show loading initially
+                ? const Center(child: CircularProgressIndicator()) 
                 : ListView.builder(
-                    itemCount: _items.length + 1, // Include one more for the loading indicator
+                    itemCount: _items.length + 1, 
                     itemBuilder: (context, index) {
                       if (index == _items.length) {
-                        // Loading more indicator
+                  
                         if (_isLoadingMore) {
                           return const Center(child: CircularProgressIndicator());
                         } else if (!_hasMoreResults) {
@@ -237,14 +252,14 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
                         }
                       }
 
-                      // Display the item
+              
                       final item = _items[index];
                       return Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Container(
                           decoration: BoxDecoration(
-                            shape: BoxShape.rectangle, // BoxShape.circle or BoxShape.rectangle
-                            color: const Color.fromARGB(255, 255, 255, 255), // Background color
+                            shape: BoxShape.rectangle, 
+                            color: const Color.fromARGB(255, 255, 255, 255), 
                             boxShadow: [
                               BoxShadow(
                                 color: const Color.fromARGB(26, 255, 255, 255),
@@ -261,10 +276,10 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
                                   children: [
                                     CircleAvatar(
                                       backgroundImage: item.pagemap.cseThumbnail.isNotEmpty
-                                          ? NetworkImage(item.pagemap.cseThumbnail[0].src) // Access the first thumbnail
-                                          : const NetworkImage('https://via.placeholder.com/150'), // Fallback image
+                                          ? NetworkImage(item.pagemap.cseThumbnail[0].src) 
+                                          : const NetworkImage('https://via.placeholder.com/150'), 
                                     ),
-                                    const SizedBox(width: 8), // Space between avatar and text
+                                    const SizedBox(width: 8), 
                                     TextButton(
                                       onPressed: () {
                                         _showLinkDialog(item.link);
