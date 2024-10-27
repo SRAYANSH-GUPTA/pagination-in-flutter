@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gradients_elevation_buttons/gradients_elevation_buttons.dart';
 import '../searchfield/searchview.dart';
+import '../blankpage/blankpage.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -14,27 +15,41 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: ImageIcon(
-     AssetImage("assets/lab.jpg"),
-     color: Colors.red,
-     size: 24,
-),
+        title: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const BlankPage(pageName: 'Search Labs')),
+            );
+          },
+          child: const ImageIcon(
+            AssetImage("assets/lab.jpg"),
+            color: Colors.red,
+            size: 24,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
-              // Action for notifications
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BlankPage(pageName: 'Notifications')),
+              );
             },
             icon: const Icon(Icons.notifications_none),
           ),
           IconButton(
             onPressed: () {
-              // Action for profile
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const BlankPage(pageName: 'Profile')),
+              );
             },
             icon: const Icon(Icons.person),
           ),
         ],
       ),
-      body: SafeArea( // Keep the SafeArea
+      body: SafeArea(
         child: Column(
           children: [
             Container(
@@ -43,23 +58,22 @@ class _HomeState extends State<Home> {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: GradientElevatedButtons( // Corrected from GradientElevatedButtons to GradientElevatedButton
-                backgroundGradient: LinearGradient(
+              child: GradientElevatedButtons( // Corrected class name
+                backgroundGradient: const LinearGradient(
                   colors: [
-                    const Color.fromARGB(255, 205, 225, 235),
-                    const Color.fromARGB(255, 231, 206, 206)
+                    Color.fromARGB(255, 205, 225, 235),
+                    Color.fromARGB(255, 231, 206, 206),
                   ],
                 ),
-                strokeGradient: LinearGradient(
+                strokeGradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    const Color.fromARGB(255, 238, 209, 209),
-                    const Color.fromARGB(255, 243, 205, 205)
+                    Color.fromARGB(255, 238, 209, 209),
+                    Color.fromARGB(255, 243, 205, 205),
                   ],
                 ),
                 onPressed: () {
-                  // Action to navigate to LectureSearchPage
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => SearchPage()),
@@ -67,14 +81,15 @@ class _HomeState extends State<Home> {
                 },
                 borderWidth: 2.0,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: SizedBox(
                     width: 250,
-                    child: Row( // Center the icon and text
-                      children: [
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
                         Icon(Icons.search),
-                        const SizedBox(width: 8), // Add space between the icon and text
-                        const Text('Search'),
+                        SizedBox(width: 8),
+                        Text('Search'),
                       ],
                     ),
                   ),
@@ -83,36 +98,47 @@ class _HomeState extends State<Home> {
                 elevation: 8.0,
               ),
             ),
-            // New buttons below the elevated button
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Action for first button
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const BlankPage(pageName: 'Image search')),
+                    );
                   },
-                  child: Icon(Icons.image_search),
+                  child: const Icon(Icons.image_search),
                 ),
-                const SizedBox(width: 10), // Space between buttons
+                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Action for second button
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const BlankPage(pageName: 'Translate')),
+                    );
                   },
-                  child: Icon(Icons.translate),
+                  child: const Icon(Icons.translate),
                 ),
-                const SizedBox(width: 10), // Space between buttons
+                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Action for second button
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const BlankPage(pageName: 'Homework')),
+                    );
                   },
-                  child: Icon(Icons.school_outlined),
+                  child: const Icon(Icons.school_outlined),
                 ),
-                const SizedBox(width: 10), // Space between buttons
+                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Action for second button
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const BlankPage(pageName: 'Music')),
+                    );
                   },
-                  child: Icon(Icons.music_note),
+                  child: const Icon(Icons.music_note),
                 ),
               ],
             ),
