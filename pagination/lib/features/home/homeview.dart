@@ -14,7 +14,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Icon(Icons.flaky_sharp),
+        title: ImageIcon(
+     AssetImage("assets/lab.jpg"),
+     color: Colors.red,
+     size: 24,
+),
         actions: [
           IconButton(
             onPressed: () {
@@ -87,28 +91,28 @@ class _HomeState extends State<Home> {
                   onPressed: () {
                     // Action for first button
                   },
-                  child: Icon(Icons.search),
+                  child: Icon(Icons.image_search),
                 ),
                 const SizedBox(width: 10), // Space between buttons
                 ElevatedButton(
                   onPressed: () {
                     // Action for second button
                   },
-                  child: Icon(Icons.person),
+                  child: Icon(Icons.translate),
                 ),
                 const SizedBox(width: 10), // Space between buttons
                 ElevatedButton(
                   onPressed: () {
                     // Action for second button
                   },
-                  child: Icon(Icons.network_cell),
+                  child: Icon(Icons.school_outlined),
                 ),
                 const SizedBox(width: 10), // Space between buttons
                 ElevatedButton(
                   onPressed: () {
                     // Action for second button
                   },
-                  child: Icon(Icons.bluetooth_outlined),
+                  child: Icon(Icons.music_note),
                 ),
               ],
             ),

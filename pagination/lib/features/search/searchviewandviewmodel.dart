@@ -27,8 +27,8 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
   }
 
   Future<SearchResponse?> fetchLectures({int startIndex = 1}) async {
-    const apiKey = 'AIzaSyDgyjGH9bB1EV0vLRVUgZchTaDemRLFmGw'; // Replace with your actual API key
-    const cx = 'c3098012a10bf496a'; // Replace with your actual CX
+    const apiKey = 'AIzaSyBe9pJhyLoYxzg3Fg7sqGhNftuYgGh3k5k'; // Replace with your actual API key
+    const cx = '97687509e9d3147fb'; // Replace with your actual CX
     final query = globals.searchq; // Use the query you want
     const numResults = 10; // Number of results per page
 
@@ -42,7 +42,7 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
         print('API Response: $data');
-        
+
         final searchResponse = SearchResponse.fromJson(data);
         return searchResponse; // Return the parsed SearchResponse
       } else {
@@ -128,7 +128,7 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {},
-          icon: const Icon(Icons.flaky_sharp),
+          icon: Image.asset("assets/lab.jpg"),
         ),
         title: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -193,28 +193,27 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
               ),
             ),
           ),
-          Container(
-            child: Padding(padding: EdgeInsets.all(10.0),
-              child: SizedBox(
-                height: 40,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    _buildCategoryButton(context, "All"),
-                    _buildCategoryButton(context, "Images"),
-                    _buildCategoryButton(context, "News"),
-                    _buildCategoryButton(context, "Videos"),
-                    _buildCategoryButton(context, "Shopping"),
-                    _buildCategoryButton(context, "Web"),
-                    _buildCategoryButton(context, "Maps"),
-                    _buildCategoryButton(context, "Short Videos"),
-                    _buildCategoryButton(context, "Books"),
-                    _buildCategoryButton(context, "Flights"),
-                    _buildCategoryButton(context, "Finance"),
-                    _buildCategoryButton(context, "Search tools"),
-                    _buildCategoryButton(context, "Feedback"),
-                  ],
-                ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SizedBox(
+              height: 40,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildCategoryButton(context, "All"),
+                  _buildCategoryButton(context, "Images"),
+                  _buildCategoryButton(context, "News"),
+                  _buildCategoryButton(context, "Videos"),
+                  _buildCategoryButton(context, "Shopping"),
+                  _buildCategoryButton(context, "Web"),
+                  _buildCategoryButton(context, "Maps"),
+                  _buildCategoryButton(context, "Short Videos"),
+                  _buildCategoryButton(context, "Books"),
+                  _buildCategoryButton(context, "Flights"),
+                  _buildCategoryButton(context, "Finance"),
+                  _buildCategoryButton(context, "Search tools"),
+                  _buildCategoryButton(context, "Feedback"),
+                ],
               ),
             ),
           ),
@@ -240,28 +239,42 @@ class _LectureSearchPageState extends State<LectureSearchPage> {
 
                       // Display the item
                       final item = _items[index];
-                      return Padding(padding: EdgeInsets.all(10.0),
-                        child: Container(decoration: BoxDecoration(
-                            shape: BoxShape.rectangle, // BoxShape.circle or BoxShape.retangle
-                            //color: const Color(0xFF66BB6A),
-                            boxShadow: [BoxShadow(
-                              color: const Color.fromARGB(26, 255, 255, 255),
-                              blurRadius: 5.0,
-                            ),]
+                      return Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle, // BoxShape.circle or BoxShape.rectangle
+                            color: const Color.fromARGB(255, 255, 255, 255), // Background color
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color.fromARGB(26, 255, 255, 255),
+                                blurRadius: 5.0,
+                              ),
+                            ],
                           ),
                           child: ListTile(
                             title: Text(item.title),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextButton(
-                                  onPressed: () {
-                                    _showLinkDialog(item.link);
-                                  },
-                                  child: Text(
-                                    item.displayLink,
-                                    style: const TextStyle(color: Colors.blue),
-                                  ),
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundImage: item.pagemap.cseThumbnail.isNotEmpty
+                                          ? NetworkImage(item.pagemap.cseThumbnail[0].src) // Access the first thumbnail
+                                          : const NetworkImage('https://via.placeholder.com/150'), // Fallback image
+                                    ),
+                                    const SizedBox(width: 8), // Space between avatar and text
+                                    TextButton(
+                                      onPressed: () {
+                                        _showLinkDialog(item.link);
+                                      },
+                                      child: Text(
+                                        item.displayLink,
+                                        style: const TextStyle(color: Colors.blue),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Text(item.snippet),
                               ],
